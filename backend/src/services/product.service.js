@@ -13,8 +13,8 @@ const findById = async (id) => {
   return { status: 'SUCCESSFUL', data: response };
 };
 
-const newProduct = async (name) => {
-  const response = await productModel.newProduct(name);
+const newProduct = async (product) => {
+  const response = await productModel.newProduct(product);
   return { status: 'CREATED', data: response };
 };
 

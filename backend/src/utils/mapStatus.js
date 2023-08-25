@@ -3,6 +3,7 @@ const statusList = {
   CREATED: 201,
   NOT_FOUND: 404,
   INVALID_VALUES: 422,
+  BAD_REQUEST: 400,
 };
 
 const mapStatus = (status) => statusList[status] || 500;
