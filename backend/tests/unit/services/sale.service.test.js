@@ -34,4 +34,11 @@ describe('Testando o service de vendas', function () {
     expect(status).to.be.deep.equal('NOT_FOUND');
     expect(data).to.be.deep.equal({ message: 'Sale not found' });
   });
+
+  it('testando se a função retorna um erro, caso não exista nenhuma venda', async function () {
+    sinon.stub(salesModel, 'findAllSale').resolves([]);
+    const { status, data } = await salesService.findAllSale();
+    expect(status).to.be.deep.equal('NOT_FOUND');
+    expect(data).to.be.deep.equal({ message: 'Sale not found' });
+  });
 });

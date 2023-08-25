@@ -18,8 +18,18 @@ const newProduct = async (name) => {
   return { status: 'CREATED', data: response };
 };
 
+const deleteProduct = async (id) => {
+  const [response] = await productModel.findById(id);
+  if (!response) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } }; 
+  }
+  await productModel.deleteProduct(id);
+  return { status: 'DELETED' };
+};
+
 module.exports = {
   findAll,
   findById,
   newProduct,
+  deleteProduct,
 };

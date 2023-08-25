@@ -21,8 +21,8 @@ message: 'Sale not found' } };
   return { status: 'SUCCESSFUL', data: response };
 };
 
-const newSale = async (saleItens) => {
-  const response = await salesModel.newSale(saleItens);
+const newSale = async (saleItems) => {
+  const response = await salesModel.newSale(saleItems);
   return { status: 'CREATED', data: response };
 };
 

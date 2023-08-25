@@ -13,8 +13,8 @@ const findByIdSale = async (req, res) => {
 };
 
 const newSale = async (req, res) => {
-  const saleItens = req.body;
-  const { status, data } = await salesService.newSale(saleItens);
+  const saleItems = req.body;
+  const { status, data } = await salesService.newSale(saleItems);
   return res.status(mapStatus(status)).json(data);
 };
 

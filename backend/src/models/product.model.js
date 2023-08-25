@@ -16,8 +16,14 @@ const newProduct = async (name) => {
   return { id: response.insertId, name };
 };
 
+const deleteProduct = async (id) => {
+  const query = 'DELETE FROM products WHERE id = ?';
+  await connection.execute(query, [id]);
+};
+
 module.exports = {
   findAll,
   findById,
   newProduct,
+  deleteProduct,
 };

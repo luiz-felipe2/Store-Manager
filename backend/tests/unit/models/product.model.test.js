@@ -33,4 +33,19 @@ describe('Testando o model de produtos', function () {
     const response = await productModel.findById(id);
     expect(response).to.be.deep.equal([]);
   });
+
+  it('criando um produto com sucesso', async function () {
+    const name = 'produto teste';
+    const newProduct = { id: 4, name };
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+    const response = await productModel.newProduct(name);
+    expect(response).to.be.deep.equal(newProduct);
+  });
+
+  it('deletando um produto com sucesso', async function () {
+    const id = 1;
+    sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }]);
+    const response = await productModel.deleteProduct(id);
+    expect(response).to.be.deep.equal();
+  });
 });

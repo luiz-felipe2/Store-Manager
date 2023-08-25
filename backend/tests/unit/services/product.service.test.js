@@ -36,4 +36,12 @@ describe('Testando o service de produtos', function () {
     expect(status).to.be.deep.equal('NOT_FOUND');
     expect(data).to.be.deep.equal({ message: 'Product not found' });
   });
+
+  it('criando um produto com sucesso', async function () {
+    const newProduct = { name: 'new product' };
+    sinon.stub(productModel, 'newProduct').resolves(newProduct);
+    const { status, data } = await productService.newProduct(newProduct);
+    expect(status).to.be.deep.equal('CREATED');
+    expect(data).to.be.deep.equal(newProduct);
+  });
 });
