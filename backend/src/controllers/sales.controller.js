@@ -12,7 +12,14 @@ const findByIdSale = async (req, res) => {
   return res.status(mapStatus(status)).json(data);
 };
 
+const newSale = async (req, res) => {
+  const saleItens = req.body;
+  const { status, data } = await salesService.newSale(saleItens);
+  return res.status(mapStatus(status)).json(data);
+};
+
 module.exports = {
   findAllSale,
   findByIdSale,
+  newSale,
 };

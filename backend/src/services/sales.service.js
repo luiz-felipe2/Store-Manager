@@ -21,7 +21,13 @@ message: 'Sale not found' } };
   return { status: 'SUCCESSFUL', data: response };
 };
 
+const newSale = async (saleItens) => {
+  const response = await salesModel.newSale(saleItens);
+  return { status: 'CREATED', data: response };
+};
+
 module.exports = {
   findAllSale,
   findByIdSale,
+  newSale,
 };
