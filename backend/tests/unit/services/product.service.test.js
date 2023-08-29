@@ -65,4 +65,18 @@ describe('Testando o service de produtos', function () {
     const { status } = await productService.deleteProduct(1);
     expect(status).to.be.deep.equal('DELETED');
   });
+
+  it('testando a funçaõ searchProduct', async function () {
+    sinon.stub(productModel, 'searchProduct').resolves(mockProducts.allProducts);
+    const { status, data } = await productService.searchProduct('product');
+    expect(status).to.be.deep.equal('SUCCESSFUL');
+    expect(data).to.be.deep.equal(mockProducts.allProducts);
+  });
+
+  it('testando a funçaõ searchProduct sem parametro', async function () {
+    sinon.stub(productModel, 'findAll').resolves(mockProducts.allProducts);
+    const { status, data } = await productService.searchProduct();
+    expect(status).to.be.deep.equal('SUCCESSFUL');
+    expect(data).to.be.deep.equal(mockProducts.allProducts);
+  });
 });

@@ -25,10 +25,17 @@ const deleteProduct = async (id) => {
   await connection.execute('DELETE FROM products WHERE id = ?', [id]);
 };
 
+const searchProduct = async (name) => {
+  const [response] = await connection
+  .execute('SELECT * FROM products WHERE name LIKE ?', [`%${name}%`]);
+  return camelize(response);
+};
+
 module.exports = {
   findAll,
   findById,
   newProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };

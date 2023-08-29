@@ -34,10 +34,21 @@ const deleteProduct = async (id) => {
   return { status: 'DELETED' };
 };
 
+const searchProduct = async (name) => {
+  if (!name) {
+    const response = await productModel.findAll();
+    return { status: 'SUCCESSFUL', data: response };
+  }
+  const response = await productModel.searchProduct(name);
+  if (!response) return { status: 'SUCCESSFUL', data: [] };
+  return { status: 'SUCCESSFUL', data: response };
+};
+
 module.exports = {
   findAll,
   findById,
   newProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
