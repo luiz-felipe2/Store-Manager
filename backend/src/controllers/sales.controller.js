@@ -18,8 +18,16 @@ const newSale = async (req, res) => {
   return res.status(mapStatus(status)).json(data);
 };
 
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  const { status, data } = await salesService.deleteSale(id);
+  if (status === 'NOT_FOUND') return res.status(mapStatus(status)).json(data);
+  if (status === 'DELETED') return res.status(mapStatus(status)).json();
+};
+
 module.exports = {
   findAllSale,
   findByIdSale,
   newSale,
+  deleteSale,
 };

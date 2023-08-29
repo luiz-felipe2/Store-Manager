@@ -62,4 +62,27 @@ describe('Testando o controller de vendas', function () {
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith({ message: '"productId" is required' });
   });
+
+  it('testando se a função deleteSale deleta uma venda', async function () {
+    sinon.stub(salesService, 'deleteSale').resolves({ status: 'DELETED' });
+    const req = { params: { id: 1 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await salesController.deleteSale(req, res);
+    expect(res.json).to.have.been.calledWith();
+  });
+
+  it('testando se a função deleteSale retorna um erro, caso a venda não exista', async function () {
+    sinon.stub(salesService, 'deleteSale').resolves({ status: 'NOT_FOUND', data: { message: 'Sale not found' } });
+    const req = { params: { id: 0 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await salesController.deleteSale(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: 'Sale not found' });
+  });
 });

@@ -48,4 +48,26 @@ describe('Testando o service de vendas', function () {
     expect(status).to.be.deep.equal('NOT_FOUND');
     expect(data).to.be.deep.equal({ message: 'Product not found' });
   });
+
+  it('testando a função de deletar uma venda', async function () {
+    sinon.stub(salesModel, 'findByIdSale').resolves(saleById);
+    sinon.stub(salesModel, 'deleteSale').resolves();
+    const { status } = await salesService.deleteSale(1);
+    expect(status).to.be.deep.equal('DELETED');
+  });
+
+  it('testando a função de deletar uma venda inexistente', async function () {
+    sinon.stub(salesModel, 'findByIdSale').resolves([]);
+    const { status, data } = await salesService.deleteSale(0);
+    expect(status).to.be.deep.equal('NOT_FOUND');
+    expect(data).to.be.deep.equal({ message: 'Sale not found' });
+  });
+
+  it('testando a função de criar uma venda', async function () {
+    sinon.stub(salesModel, 'findByIdSale').resolves([{ productId: 1, quantity: 1 }]);
+    sinon.stub(salesModel, 'newSale').resolves(1);
+    const { status, data } = await salesService.newSale([{ productId: 1, quantity: 1 }]);
+    expect(status).to.be.deep.equal('CREATED');
+    expect(data).to.be.deep.equal({ id: 1, itemsSold: [{ productId: 1, quantity: 1 }] });
+  });
 });
