@@ -45,7 +45,83 @@ const allSales = [
     },
   ];
 
+  const inputSale = [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 5,
+    },
+  ];
+
+  const resultSale = {
+    id: 3,
+    itemsSold: [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ],
+  };
+
+  const inputWrong = [
+    {
+      productId: 1000,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 5,
+    },
+  ];
+
+  const inputWrong2 = [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2000,
+      quantity: 5,
+    },
+  ];
+
+  const noId = [
+    {
+      productIddd: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 5,
+    },
+  ];
+
+  const quantity = [
+    {
+      productId: 1,
+      quantity: 1,
+    },
+    {
+      productId: 2,
+      quantity: 0,
+    },
+  ];
+
   module.exports = {
     allSales,
     saleById,
+    inputSale,
+    resultSale,
+    inputWrong,
+    inputWrong2,
+    noId,
+    quantity,
+
   };

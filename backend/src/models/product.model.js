@@ -16,14 +16,15 @@ const newProduct = async (name) => {
   return { id: response.insertId, name };
 };
 
-const deleteProduct = async (id) => {
-  const query = 'DELETE FROM products WHERE id = ?';
-  await connection.execute(query, [id]);
+const updateProduct = async (product, id) => {
+  const { name } = product;
+  const query = 'UPDATE products SET name = ? WHERE id = ?';
+  return connection.execute(query, [name, id]);
 };
 
 module.exports = {
   findAll,
   findById,
   newProduct,
-  deleteProduct,
+  updateProduct,
 };

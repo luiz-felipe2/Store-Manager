@@ -4,7 +4,7 @@ const sinonChai = require('sinon-chai');
 
 const { salesService } = require('../../../src/services/index');
 const { salesController } = require('../../../src/controllers/index');
-const { allSales } = require('../../mocks/sales.mocks');
+const { allSales, noId } = require('../../mocks/sales.mocks');
 
 chai.use(sinonChai);
 const { expect } = chai;
@@ -36,5 +36,30 @@ describe('Testando o controller de vendas', function () {
     await salesController.findByIdSale(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(allSales[0]);
+  });
+
+  it('testando se a função newSale retorna uma venda', async function () {
+    sinon.stub(salesService, 'newSale').resolves({ status: 'CREATED', data: allSales[0] });
+    const req = { body: [{ productId: 1, quantity: 1 }] };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await salesController.newSale(req, res);
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(allSales[0]);
+  });
+
+  it('testando se a função newSale retorna um erro, caso algum produto não exista', async function () {
+   const req = { body: noId };
+   const res = {
+    status: sinon.stub().returnsThis(),
+    json: sinon.stub(),
+   };
+   sinon.stub(salesService, 'newSale').resolves({ status: 'NOT_FOUND', data: { message: '"productId" is required' } });
+    await salesController.newSale(req, res);
+
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: '"productId" is required' });
   });
 });

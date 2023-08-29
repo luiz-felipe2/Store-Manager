@@ -18,9 +18,10 @@ const newProduct = async (req, res) => {
   return res.status(mapStatus(status)).json(data);
 };
 
-const deleteProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { status, data } = await productService.deleteProduct(id);
+  const productData = req.body;
+  const { status, data } = await productService.updateProduct(id, productData);
   return res.status(mapStatus(status)).json(data);
 };
 
@@ -28,5 +29,5 @@ module.exports = {
   findAll,
   findById,
   newProduct,
-  deleteProduct,
+  updateProduct,
 };

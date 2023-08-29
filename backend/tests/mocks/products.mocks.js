@@ -4,6 +4,11 @@ const allProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
+const newProduct = {
+  name: 'Produto de teste',
+};
+
 module.exports = {
   allProducts,
+  newProduct,
 };

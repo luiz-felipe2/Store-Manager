@@ -18,7 +18,18 @@ const validateQuantity = (req, res, next) => {
   next();
 };
 
-const validateFields = [validateProduct, validateQuantity];
+const validateQuantityValue = (req, res, next) => {
+  const salesItems = req.body;
+  const invalidQuantity = salesItems.some((item) => item.quantity <= 0);
+
+  if (invalidQuantity) {
+    return res.status(422).json({ message: '"quantity" must be greater than or equal to 1' });
+  }
+  next();
+};
+
+const validateFields = [validateProduct, validateQuantity,
+   validateQuantityValue];
 
 module.exports = {
   validateFields,

@@ -41,4 +41,18 @@ describe('Testando o service de vendas', function () {
     expect(status).to.be.deep.equal('NOT_FOUND');
     expect(data).to.be.deep.equal({ message: 'Sale not found' });
   });
+
+  it('testando se a função retorna um erro, caso algum produto não exista', async function () {
+    sinon.stub(salesModel, 'newSale').resolves([]);
+    const { status, data } = await salesService.newSale([{ productId: 0, quantity: 1 }]);
+    expect(status).to.be.deep.equal('NOT_FOUND');
+    expect(data).to.be.deep.equal({ message: 'Product not found' });
+  });
+
+  it('testando se a função retorna uma venda, caso todos os produtos existam', async function () {
+    sinon.stub(salesModel, 'newSale').resolves(allSales[0]);
+    const { status, data } = await salesService.newSale([{ productId: 1, quantity: 1 }]);
+    expect(status).to.be.deep.equal('CREATED');
+    expect(data).to.be.deep.equal(allSales[0]);
+  });
 });

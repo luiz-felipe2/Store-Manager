@@ -1,4 +1,4 @@
-// const { mapStatus } = require('../utils/mapStatus');
+// const checkFields = require('../utils/checkFields');
 
 const validateName = (req, res, next) => {
     const { name } = req.body;
@@ -10,9 +10,11 @@ const validateName = (req, res, next) => {
         .json({ message: '"name" length must be at least 5 characters long' });
     }
 
-    next();
+   return next();
 };
 
+const validateProduct = [validateName];
+
 module.exports = {
-    validateName,
+    validateProduct,
 };
