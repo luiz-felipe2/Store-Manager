@@ -18,14 +18,13 @@ const newProduct = async (name) => {
   return { status: 'CREATED', data: response };
 };
 
-const updateProduct = async (productId, productData) => {
-  const checkProduct = await productModel.findById(productId);
-  if (checkProduct) return { status: 'NOT_FOUND', data: { message: 'Product not found' } }; 
-  
-  await productModel.updateProduct(productId, productData);
-  const response = await productModel.findById(productId);
-  
-  return { status: 'SUCCESSFUL', data: response };
+const updateProduct = async (id, name) => {
+  const [response] = await productModel.findById(id);
+  if (!response) {
+    return { status: 'NOT_FOUND', data: { message: 'Product not found' } }; 
+  }
+  const response2 = await productModel.updateProduct(id, name);
+  return { status: 'SUCCESSFUL', data: response2 };
 };
 
 module.exports = {

@@ -20,8 +20,8 @@ const newProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const productData = req.body;
-  const { status, data } = await productService.updateProduct(id, productData);
+  const { name } = req.body;
+  const { status, data } = await productService.updateProduct(id, name);
   return res.status(mapStatus(status)).json(data);
 };
 
