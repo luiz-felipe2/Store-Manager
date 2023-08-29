@@ -50,15 +50,26 @@ describe('Testando o controller de produtos', function () {
     expect(res.json).to.have.been.calledWith(allProducts[0]);
   }); 
 
-  // it('testando se a função deleteProduct retorna um produto', async function () {
-  //   sinon.stub(productService, 'deleteProduct').resolves({ status: 'SUCCESSFUL' });
-  //   const req = { params: { id: 1 } };
-  //   const res = {
-  //     status: sinon.stub().returnsThis(),
-  //     json: sinon.stub(),
-  //   };
-  //   await productController.deleteProduct(req, res);
-  //   expect(res.status).to.have.been.calledWith(200);
-  //   expect(res.json).to.have.been.calledWith();
-  // });
+  it('testando se a função updateProduct retorna um produto', async function () {
+    sinon.stub(productService, 'updateProduct').resolves({ status: 'SUCCESSFUL', data: allProducts[0] });
+    const req = { params: { id: 1 }, body: { name: 'produto teste' } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.updateProduct(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(allProducts[0]);
+  });
+
+  it('testando se a função deleteProduct retorna um produto', async function () {
+    sinon.stub(productService, 'deleteProduct').resolves({ status: 'DELETED' });
+    const req = { params: { id: 1 } };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.deleteProduct(req, res);
+    expect(res.json).to.have.been.calledWith();
+  });
 });

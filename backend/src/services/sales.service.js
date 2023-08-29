@@ -1,4 +1,4 @@
-const { salesModel, productModel } = require('../models');
+const { salesModel } = require('../models');
 
 const findAllSale = async () => {
   const response = await salesModel.findAllSale();
@@ -21,20 +21,17 @@ message: 'Sale not found' } };
   return { status: 'SUCCESSFUL', data: response };
 };
 
-const someProductNotExists = async (saleItems) => {
-  const promises = saleItems.map(async (item) => productModel.findById(item.productId));
-  const response = await Promise.all(promises);
-  const productNotExists = response.some((item) => item.length === 0);
-  return productNotExists;
-};
-
 const newSale = async (saleItems) => {
-  if (await someProductNotExists(saleItems)) {
-    return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
-  }
-  const response = await salesModel.newSale(saleItems);
-  return { status: 'CREATED', data: response };
-};
+ const hasItems = saleItems.map(({ productId }) => salesModel.findByIdSale(productId));
+  const hasItems2 = await Promise.all(hasItems);
+  const hasItems3 = hasItems2.some((item) => item.length === 0);
+  if (hasItems3) return { status: 'NOT_FOUND', data: { message: 'Product not found' } };
+
+  const id = await salesModel.newSale(saleItems);
+  const salesId = await salesModel.findByIdSale(id);
+  const itemsSold = salesId.map(({ productId, quantity }) => ({ productId, quantity }));
+  return { status: 'CREATED', data: { id, itemsSold } };
+ };
 
 module.exports = {
   findAllSale,

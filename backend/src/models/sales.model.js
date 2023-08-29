@@ -26,19 +26,16 @@ const findByIdSale = async (id) => {
 };
 
 const newSale = async (saleItems) => {
-  const date = new Date();
-  const [response] = await connection.execute(
-    'INSERT INTO sales (date) VALUES (?);',
-    [date],
-  );
-  const addSales = saleItems.map((item) => connection.execute(
-    `INSERT INTO sales_products (sale_id, product_id, quantity)
-    VALUES (?, ?, ?);`,
-    [response.insertId, item.productId, item.quantity],
+  const nDate = new Date();
+  const [response] = await connection.execute('INSERT INTO sales (date) VALUE(?)', [nDate]);
+
+  const addSales = saleItems.map(({ productId, quantity }) => connection.execute(
+    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUE (?, ?, ?)',
+    [response.insertId, productId, quantity],
   ));
 
   await Promise.all(addSales);
-  return camelize(response.insertId);
+  return response.insertId;
 };
 
 module.exports = {
